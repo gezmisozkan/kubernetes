@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  # security can be added to the pod level
+  # securityContext:
+  #   runAsUser: 1000
+  containers:
+  - name: my-ubuntu-container
+    image: ubuntu
+    command: ["sleep", "3600"]
+    envFrom:
+    - configMapRef:
+        name: my-config
+    - secretRef:
+        name: my-secret
+    # security can be added to the container level as well
+    securityContext:
+      runAsUser: 1000
+      # but capabilities can only be added at the container level
+      capabilities:
+        add:
+        - NET_ADMIN

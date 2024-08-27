@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-deploy
+  labels:
+    app: kube-deploy
+
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+  selector:
+    matchLabels:
+      app: nginx
+

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+    envFrom:
+    - configMapRef:
+        name: my-config
+    - secretRef:
+        name: my-secreta
+    # env: # can be used instead of envFrom
+    # - name: MY_CONFIG_MAP_KEY
+    #   valueFrom:
+    #     configMapKeyRef:
+    #       name: my-config
+    #       key: my-key
+    # - name: MY_SECOND_CONFIG_MAP_KEY
+    #   valueFrom:
+    #     configMapKeyRef:
+    #       name: my-config
+    #       key: my-second-key
+    # - name: MY_SECRET_KEY
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: my-secret
+    #       key: my-key
+    # - name: MY_SECRET_KEY2
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: my-secret
+    #       key: my-second-key

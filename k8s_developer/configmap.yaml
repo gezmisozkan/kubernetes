@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+  labels:
+    app: my-app
+data:
+  my-key: my-value
+  my-second-key: my-second-value

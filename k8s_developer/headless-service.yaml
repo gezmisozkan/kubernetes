@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service # headless service
+metadata:
+  name: mysql-h
+spec:
+  clusterIP: None
+  selector:
+    app: mysql
+  ports:
+  - port: 3306

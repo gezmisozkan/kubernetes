@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-app-deploy
+  labels:
+    name: result-app-deploy
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: result-app-pod
+      labels:
+        name: result-app-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: result-app
+        image: dockersamples/examplevotingapp_result
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      name: result-app-pod
+      app: demo-voting-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-app-deploy
+  labels:
+    name: voting-app-deploy
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: voting-app-pod
+      labels:
+        name: voting-app-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: voting-app
+        image: dockersamples/examplevotingapp_vote
+        ports:
+        - containerPort: 80
+  selector:
+    matchLabels:
+      name: voting-app-pod
+      app: demo-voting-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deploy
+  labels:
+    name: redis-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: redis-pod
+      labels:
+        name: redis-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+        - containerPort: 6379
+  selector:
+    matchLabels:
+      name: redis-pod
+      app: demo-voting-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deploy
+  labels:
+    name: postgres-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: postgres-pod
+      labels:
+        name: postgres-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+  selector:
+    matchLabels:
+      name: postgres-pod
+      app: demo-voting-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deploy
+  labels:
+    name: worker-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: worker-pod
+      labels:
+        name: worker-pod
+        app: demo-voting-app
+    spec:
+      containers:
+      - name: worker-app
+        image: dockersamples/examplevotingapp_worker
+  selector:
+    matchLabels:
+      name: worker-pod
+      app: demo-voting-app

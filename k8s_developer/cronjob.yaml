@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-cronjob
+spec:
+  jobTemplate:
+    spec:
+      completions: 3
+      parallelism: 2
+      template:
+        spec:
+          containers:
+          - name: my-container
+            image: ubuntu
+            command: ["expr", "3", "+", "2"]
+          restartPolicy: Never
+      backoffLimit: 4
+  schedule: "5 19 * * *" # Run at 7:05 PM every day

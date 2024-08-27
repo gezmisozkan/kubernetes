@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod-with-node-affinity
+  labels:
+    app: my-app
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms: # assign the pod to a node that has a label with key size and value Large 
+        # and dont assign to a node that has a label with key size and value Small
+        - matchExpressions:
+          - key: size
+            operator: In
+            values:
+            - Large
+            - Medium
+        - matchExpressions:
+          - key: size
+            operator: NotIn
+            values:
+            - Small
+      # preferredDuringSchedulingIgnoredDuringExecution: # assign the pod to a node that has a label with key size and value Large
+      # # but if there is no such node, assign to any node
+      # - weight: 1
+      #   preference:
+      #     matchExpressions:
+      #     - key: size
+      #       operator: In
+      #       values:
+      #       - Large
+      #       - Medium

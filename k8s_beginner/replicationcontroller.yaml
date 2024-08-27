@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: kube-rc
+  labels:
+    app: kube-rc
+
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: rc-pod
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: headless-pod
+  labels:
+    app: headless-pod
+spec:
+  containers:
+  - name: headless-container
+    image: mysql
+  subdomain: mysql-h
+  hostname: headless-pod

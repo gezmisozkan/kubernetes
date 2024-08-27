@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+spec:
+  containers:
+  - name: random-number-generator
+    image: alpine
+    command: ["bin/sh", "-c"]
+    args: ["shuf -i 0-100 -n 1 >> /opt/random-number.out;"]
+    volumeMounts:
+    - name: data_volume
+      mountPath: /opt
+
+  volumes:
+  - name: data_volume
+    hostPath:
+      path: /data
+      type: DirectoryOrCreate

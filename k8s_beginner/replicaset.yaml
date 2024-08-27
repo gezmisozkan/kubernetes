@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kube-rs
+  labels:
+    app: kube-rs
+
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: rs-pod
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+  selector:
+    matchLabels:
+      app: nginx
+
